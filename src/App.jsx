@@ -1,13 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+// Pages
 import TopUp from "./pages/TopUp";
 import PaymentSuccess from "./pages/PaymentSuccess";
 
-const Home = () => {
+function Home() {
   return (
     <div style={styles.home}>
-      <h1>🎮 Welcome to Noxstore</h1>
+      <h1>🎮 NOXSTORE</h1>
       <p>Fast & Secure Game Top-Ups</p>
 
       <a href="/topup" style={styles.button}>
@@ -15,9 +16,9 @@ const Home = () => {
       </a>
     </div>
   );
-};
+}
 
-function App() {
+export default function App() {
   return (
     <Router>
       <Routes>
@@ -29,21 +30,19 @@ function App() {
   );
 }
 
-export default App;
-
 /**
- * SIMPLE UI STYLES
+ * SIMPLE UI STYLES (MVP LEVEL)
  */
 const styles = {
   home: {
-    minHeight: "100vh",
-    background: "#0f172a",
-    color: "#fff",
+    height: "100vh",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    gap: "15px",
     justifyContent: "center",
-    gap: "20px",
+    alignItems: "center",
+    background: "#0f172a",
+    color: "#fff",
     textAlign: "center",
   },
   button: {
@@ -51,7 +50,7 @@ const styles = {
     background: "#22c55e",
     color: "#fff",
     textDecoration: "none",
-    borderRadius: "6px",
+    borderRadius: "8px",
     fontWeight: "bold",
   },
 };
