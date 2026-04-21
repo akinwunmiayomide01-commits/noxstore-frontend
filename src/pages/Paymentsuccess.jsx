@@ -5,13 +5,9 @@ export default function PaymentSuccess() {
 
   useEffect(() => {
     const verify = async () => {
-      const params = new URLSearchParams(window.location.search);
-      const reference = params.get("reference");
+      const reference = new URLSearchParams(window.location.search).get("reference");
 
-      if (!reference) {
-        setStatus("error");
-        return;
-      }
+      if (!reference) return setStatus("error");
 
       try {
         const res = await fetch(
@@ -20,9 +16,8 @@ export default function PaymentSuccess() {
 
         const data = await res.json();
 
-        if (data.success) setStatus("success");
-        else setStatus("failed");
-      } catch (err) {
+        setStatus(data.success ? "success" : "failed");
+      } catch {
         setStatus("error");
       }
     };
@@ -31,7 +26,7 @@ export default function PaymentSuccess() {
   }, []);
 
   return (
-    <div style={styles.container}>
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
       {status === "loading" && <h2>Verifying Payment...</h2>}
       {status === "success" && <h2>Payment Successful 🎉</h2>}
       {status === "failed" && <h2>Payment Failed ❌</h2>}
@@ -39,15 +34,3 @@ export default function PaymentSuccess() {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "#0f172a",
-    color: "#fff",
-    flexDirection: "column",
-  },
-};
