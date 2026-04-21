@@ -1,15 +1,16 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Pages
 import TopUp from "./pages/TopUp";
 import PaymentSuccess from "./pages/PaymentSuccess";
 
+// Home Page (MVP)
 function Home() {
   return (
-    <div style={styles.home}>
+    <div style={styles.container}>
       <h1>🎮 NOXSTORE</h1>
-      <p>Fast & Secure Game Top-Ups</p>
+      <p>Fast Game Top-Ups & Payments</p>
 
       <a href="/topup" style={styles.button}>
         Start Top-Up
@@ -20,32 +21,33 @@ function Home() {
 
 export default function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/topup" element={<TopUp />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
+
+        {/* fallback route (prevents blank page) */}
+        <Route path="*" element={<Home />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
-/**
- * SIMPLE UI STYLES (MVP LEVEL)
- */
+// simple MVP styles
 const styles = {
-  home: {
+  container: {
     height: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    gap: "15px",
-    justifyContent: "center",
-    alignItems: "center",
     background: "#0f172a",
     color: "#fff",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     textAlign: "center",
   },
   button: {
+    marginTop: "20px",
     padding: "12px 20px",
     background: "#22c55e",
     color: "#fff",
