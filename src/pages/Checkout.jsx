@@ -1,37 +1,74 @@
-import { useLocation } from "react-router-dom";
+import React, { useState } from "react";
+
+const BASE_URL = "https://noxstore-backend.onrender.com"; 
+// 🔴 replace with your real Render backend URL
 
 export default function Checkout() {
-  const { state } = useLocation();
+  const [loading, setLoading] = useState(false);
 
-  if (!state) {
-    return <div className="container py-5 text-white">No order found</div>;
-  }
+  const user = {
+    email: "test@gmail.com", // replace with real logged-in user
+    playerId: "12345",
+  };
 
-  const { gameId, playerId, amount } = state;
+  const selectedGame = "freefire"; // replace dynamically if needed
+
+  const payNow = async () => {
+    try {
+      setLoading(true);
+
+      const res = await fetch(`${BASE_URL}/api/paystack/initialize`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.email,
+          amount: 500, // MVP test amount
+          player_id: user.playerId,
+          game_id: selectedGame,
+        }),
+      });
+
+      const data = await res.json();
+
+      console.log("PAYMENT RESPONSE:", data);
+
+      if (!data.success) {
+        alert(data.message || "Payment failed");
+        return;
+      }
+
+      // 🔥 REDIRECT TO PAYSTACK
+      window.location.href = data.authorization_url;
+    } catch (err) {
+      console.error("Checkout error:", err);
+      alert("Network error. Try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="container py-5">
+    <div style={{ padding: "20px", color: "#fff" }}>
+      <h2>Checkout</h2>
 
-      <h2 className="text-primary">Secure Checkout</h2>
+      <p>Email: {user.email}</p>
+      <p>Amount: ₦500</p>
 
-      <div className="card bg-dark text-white p-4">
-
-        <p><b>Game:</b> {gameId}</p>
-        <p><b>Player ID:</b> {playerId}</p>
-        <p><b>Amount:</b> ₦{amount}</p>
-
-        <hr />
-
-        <button className="btn btn-success w-100 mb-2">
-          Pay with Paystack (Coming Soon)
-        </button>
-
-        <small className="text-secondary">
-          Payments are secured via Paystack encryption
-        </small>
-
-      </div>
-
+      <button
+        onClick={payNow}
+        disabled={loading}
+        style={{
+          padding: "10px 20px",
+          background: "green",
+          color: "#fff",
+          border: "none",
+          cursor: "pointer",
+        }}
+      >
+        {loading ? "Processing..." : "Pay Now"}
+      </button>
     </div>
   );
 }
