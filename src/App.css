@@ -1,165 +1,68 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+:root {
+  --bg: #070a12;
+  --panel: #0f172a;
+  --card: #111827;
+  --text: #ffffff;
+  --muted: #94a3b8;
+
+  --primary: #00e5ff;
+  --primary-glow: rgba(0, 229, 255, 0.3);
+
+  --accent: #7c3aed;
+  --danger: #ff3b3b;
 }
 
 body {
-  background: #0b0f1a;
-  color: #ffffff;
-  overflow-x: hidden;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* =========================
-   GLOBAL BUTTON STYLE
-========================= */
 button {
   cursor: pointer;
-  border-radius: 10px;
-  transition: all 0.25s ease-in-out;
+  transition: 0.2s ease;
 }
 
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(0, 255, 204, 0.6);
+  box-shadow: 0 0 18px var(--primary-glow);
 }
 
-/* =========================
-   INPUT STYLES
-========================= */
-input, select {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-  background: #111827;
-  color: #fff;
-  transition: 0.2s;
-}
-
-input:focus, select:focus {
-  box-shadow: 0 0 10px #00ffcc;
-}
-
-/* =========================
-   CARD STYLE (GAMES / FEATURES)
-========================= */
+/* CARDS */
 .card {
-  background: #111827;
-  border-radius: 12px;
-  padding: 15px;
-  transition: 0.3s ease-in-out;
-  border: 1px solid rgba(255,255,255,0.05);
+  background: var(--card);
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid rgba(188, 226, 198, 0.05);
 }
 
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
-}
-
-/* =========================
-   PRIMARY BUTTON
-========================= */
-.btn-primary {
-  background: #00ffcc;
-  color: #000;
-  padding: 12px 18px;
+/* PRIMARY BUTTON */
+.btn {
+  background: var(--primary);
+  color: #3b55be9f;
   border: none;
+  padding: 12px 16px;
+  border-radius: 10px;
   font-weight: bold;
 }
 
-.btn-primary:hover {
-  background: #00e6b8;
+.btn:hover {
+  background: #9020afa1;
 }
 
-/* =========================
-   SECONDARY BUTTON
-========================= */
-.btn-secondary {
-  background: transparent;
-  border: 1px solid #00ffcc;
-  color: #00ffcc;
-  padding: 10px 15px;
+/* INPUTS */
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #5a69899d;
+  color: white;
 }
 
-.btn-secondary:hover {
-  background: rgba(0, 255, 204, 0.1);
-}
-
-/* =========================
-   HERO SECTION STYLE
-========================= */
-.hero {
-  text-align: center;
-  padding: 80px 20px;
-}
-
-.hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-}
-
-.hero p {
-  opacity: 0.7;
-}
-
-/* =========================
-   GRID LAYOUT
-========================= */
-.grid {
-  display: grid;
-  gap: 15px;
-}
-
-/* responsive grid */
-@media (min-width: 600px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 900px) {
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-/* =========================
-   ANIMATION BASE
-========================= */
-.fade-in {
-  animation: fadeIn 0.6s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* =========================
-   GLASS CARD (MODERN LOOK)
-========================= */
-.glass {
-  background: rgba(17, 24, 39, 0.7);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 15px;
-  border: 1px solid rgba(255,255,255,0.05);
-}
-
-/* =========================
-   TEXT ACCENT
-========================= */
-.accent {
-  color: #00ffcc;
+input:focus {
+  outline: 2px solid var(--primary);
 }

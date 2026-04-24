@@ -1,32 +1,49 @@
-import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import "../App.css";
+
+// IMPORT LOGOS
+import ff from "../assets/freefire.png";
+import pubg from "../assets/pubg.png";
+import cod from "../assets/cod.png";
+import fc from "../assets/fc.png";
+import logo from "../assets/noxstore.png";
 
 export default function Home() {
   const navigate = useNavigate();
 
+  const games = [
+    { name: "Free Fire", img: ff },
+    { name: "PUBG Mobile", img: pubg },
+    { name: "COD Mobile", img: cod },
+    { name: "FC Mobile", img: fc },
+  ];
+
   return (
     <div style={styles.container}>
-      <Navbar />
+      {/* NAVBAR */}
+      <div style={styles.nav}>
+        <div style={styles.navLeft}>
+          <img src={logo} alt="logo" style={styles.logo} />
+          <h2>NOXSTORE</h2>
+        </div>
+      </div>
 
       {/* HERO */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
         style={styles.hero}
       >
         <h1>⚡ Instant Game Top-Ups</h1>
-        <p>Fast • Secure • Cheap</p>
+        <p>Fast • Secure • Reliable</p>
 
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
+        <button
+          className="btn"
           onClick={() => navigate("/games")}
-          style={styles.button}
         >
           Start Top-Up
-        </motion.button>
+        </button>
       </motion.div>
 
       {/* FEATURED GAMES */}
@@ -34,23 +51,21 @@ export default function Home() {
         <h2>🔥 Featured Games</h2>
 
         <div style={styles.grid}>
-          {["Free Fire", "PUBG", "COD Mobile", "FC Mobile"].map(
-            (game, i) => (
-              <motion.div
-                key={game}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                style={styles.card}
-              >
-                <h3>{game}</h3>
-                <button onClick={() => navigate("/games")} style={styles.smallBtn}>
-                  Top Up
-                </button>
-              </motion.div>
-            )
-          )}
+          {games.map((g, i) => (
+            <motion.div
+              key={g.name}
+              className="card"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              whileHover={{ scale: 1.05 }}
+              onClick={() => navigate(`/checkout?game=${g.name}`)}
+              style={{ cursor: "pointer" }}
+            >
+              <img src={g.img} alt={g.name} style={styles.gameImg} />
+              <h3>{g.name}</h3>
+            </motion.div>
+          ))}
         </div>
       </div>
     </div>
@@ -58,18 +73,28 @@ export default function Home() {
 }
 
 const styles = {
-  container: { background: "#0b0f1a", minHeight: "100vh" },
+  container: {
+    minHeight: "100vh",
+    background: "#070a12",
+    color: "#fff",
+  },
+  nav: {
+    padding: "15px 25px",
+    display: "flex",
+    alignItems: "center",
+    borderBottom: "1px solid rgba(255,255,255,0.05)",
+  },
+  navLeft: {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+  },
+  logo: {
+    width: 35,
+  },
   hero: {
     textAlign: "center",
     padding: "80px 20px",
-  },
-  button: {
-    marginTop: 20,
-    padding: "12px 25px",
-    background: "#00ffcc",
-    border: "none",
-    cursor: "pointer",
-    fontWeight: "bold",
   },
   section: {
     padding: 20,
@@ -80,18 +105,9 @@ const styles = {
     gap: 15,
     marginTop: 20,
   },
-  card: {
-    background: "#111827",
-    padding: 20,
-    borderRadius: 12,
-    textAlign: "center",
-    transition: "0.3s",
-  },
-  smallBtn: {
-    marginTop: 10,
-    padding: "8px 12px",
-    background: "#00ffcc",
-    border: "none",
-    cursor: "pointer",
+  gameImg: {
+    width: "100%",
+    borderRadius: 10,
+    marginBottom: 10,
   },
 };

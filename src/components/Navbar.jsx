@@ -1,13 +1,11 @@
-import { Link } from "react-router-dom";
+import logo from "../assets/noxstore.png";
 
 export default function Navbar() {
   return (
     <div style={styles.nav}>
-      <h2 style={{ color: "#00ffcc" }}>NOXSTORE</h2>
-
-      <div style={styles.links}>
-        <Link to="/" style={styles.link}>Home</Link>
-        <Link to="/games" style={styles.link}>Games</Link>
+      <div style={styles.left}>
+        <img src={logo} alt="noxstore" style={styles.logo} />
+        <h2>NOXSTORE</h2>
       </div>
     </div>
   );
@@ -19,14 +17,16 @@ const styles = {
     justifyContent: "space-between",
     padding: "15px 25px",
     background: "#0b0f1a",
-    borderBottom: "1px solid #222",
+    alignItems: "center",
   },
-  links: {
+  left: {
     display: "flex",
-    gap: "20px",
+    alignItems: "center",
+    gap: 10,
   },
-  link: {
-    color: "#fff",
-    textDecoration: "none",
+  logo: {
+    width: 35,
+    height: 35,
+    objectFit: "contain",
   },
 };

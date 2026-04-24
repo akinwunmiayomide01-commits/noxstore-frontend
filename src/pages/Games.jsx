@@ -1,34 +1,43 @@
-import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import "../App.css";
 
-const games = ["Free Fire", "PUBG", "COD Mobile", "FC Mobile"];
+// IMPORT LOGOS
+import ff from "../assets/freefire.png";
+import pubg from "../assets/pubg.png";
+import cod from "../assets/cod.png";
+import fc from "../assets/fc.png";
 
 export default function Games() {
   const navigate = useNavigate();
 
+  const games = [
+    { name: "Free Fire", img: ff },
+    { name: "PUBG Mobile", img: pubg },
+    { name: "COD Mobile", img: cod },
+    { name: "FC Mobile", img: fc },
+  ];
+
   return (
     <div style={styles.container}>
-      <Navbar />
-
-      <h2 style={{ padding: 20 }}>Select Game</h2>
+      <h2 style={styles.title}>🎮 Select a Game</h2>
 
       <div style={styles.grid}>
-        {games.map((game, i) => (
+        {games.map((g, i) => (
           <motion.div
-            key={game}
+            key={g.name}
+            className="card"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: i * 0.1 }}
             whileHover={{ scale: 1.05 }}
-            style={styles.card}
+            onClick={() => navigate(`/checkout?game=${g.name}`)}
+            style={{ cursor: "pointer" }}
           >
-            <h3>{game}</h3>
+            <img src={g.img} alt={g.name} style={styles.gameImg} />
+            <h3>{g.name}</h3>
 
-            <button
-              onClick={() => navigate(`/checkout?game=${game}`)}
-              style={styles.button}
-            >
+            <button className="btn">
               Top Up
             </button>
           </motion.div>
@@ -39,24 +48,24 @@ export default function Games() {
 }
 
 const styles = {
-  container: { background: "#0b0f1a", minHeight: "100vh", color: "#fff" },
+  container: {
+    minHeight: "100vh",
+    background: "#070a12",
+    color: "#fff",
+    padding: 20,
+  },
+  title: {
+    textAlign: "center",
+    marginBottom: 20,
+  },
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
     gap: 15,
-    padding: 20,
   },
-  card: {
-    background: "#111827",
-    padding: 20,
-    borderRadius: 12,
-    textAlign: "center",
-  },
-  button: {
-    marginTop: 10,
-    padding: "10px",
-    background: "#00ffcc",
-    border: "none",
-    cursor: "pointer",
+  gameImg: {
+    width: "100%",
+    borderRadius: 10,
+    marginBottom: 10,
   },
 };
