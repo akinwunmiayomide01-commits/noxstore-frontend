@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 
-const BASE_URL = "https://noxstore-backend.onrender.com"; 
-// 🔴 replace with your real Render backend URL
+const BASE_URL = "https://noxstore-backend.onrender.com";
 
 export default function Checkout() {
   const [loading, setLoading] = useState(false);
 
+  // 🔴 MVP MOCK USER (replace later with auth system)
   const user = {
-    email: "test@gmail.com", // replace with real logged-in user
-    playerId: "12345",
+    email: "testuser@gmail.com",
+    playerId: "player_001",
   };
 
-  const selectedGame = "freefire"; // replace dynamically if needed
+  const selectedGame = "freefire";
 
-  const payNow = async () => {
+  const amount = 500;
+
+  const handlePay = async () => {
     try {
       setLoading(true);
+
+      console.log("🚀 Initiating payment...");
 
       const res = await fetch(`${BASE_URL}/api/paystack/initialize`, {
         method: "POST",
@@ -24,7 +28,7 @@ export default function Checkout() {
         },
         body: JSON.stringify({
           email: user.email,
-          amount: 500, // MVP test amount
+          amount,
           player_id: user.playerId,
           game_id: selectedGame,
         }),
@@ -32,14 +36,14 @@ export default function Checkout() {
 
       const data = await res.json();
 
-      console.log("PAYMENT RESPONSE:", data);
+      console.log("📦 INIT RESPONSE:", data);
 
       if (!data.success) {
         alert(data.message || "Payment failed");
         return;
       }
 
-      // 🔥 REDIRECT TO PAYSTACK
+      // 🔥 MVP CORE ACTION: redirect to Paystack
       window.location.href = data.authorization_url;
     } catch (err) {
       console.error("Checkout error:", err);
@@ -50,21 +54,23 @@ export default function Checkout() {
   };
 
   return (
-    <div style={{ padding: "20px", color: "#fff" }}>
+    <div style={{ padding: 20, color: "#fff", background: "#111", minHeight: "100vh" }}>
       <h2>Checkout</h2>
 
-      <p>Email: {user.email}</p>
-      <p>Amount: ₦500</p>
+      <p>Game: {selectedGame}</p>
+      <p>Amount: ₦{amount}</p>
+      <p>User: {user.email}</p>
 
       <button
-        onClick={payNow}
+        onClick={handlePay}
         disabled={loading}
         style={{
-          padding: "10px 20px",
-          background: "green",
+          padding: "12px 20px",
+          background: loading ? "gray" : "green",
           color: "#fff",
           border: "none",
           cursor: "pointer",
+          marginTop: 20,
         }}
       >
         {loading ? "Processing..." : "Pay Now"}
